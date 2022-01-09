@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 import { PostService } from '../services/PostService'
 
 class PostController {
-    handle(request: Request, response: Response){
-
+    async handle(request: Request, response: Response){
         const { content } = request.body;
 
-        const postService = new PostService();
+        const postService = container.resolve(PostService);
 
-        const post = postService.execute({
+        const post = await postService.execute({
             content
         });
 
-        return response.json(post);
+        return response.status(202).json(post);
     }
 }
 

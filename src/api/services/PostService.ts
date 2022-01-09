@@ -1,20 +1,24 @@
 import { Post } from "api/entities/Post";
-import { IPostRequestDTO } from "../DTOs/IPostRequestDTO";
+import { IPostRepository } from "api/repositories/IPostRepository";
+import { inject, injectable } from "tsyringe";
 
+interface IRequest {
+    content: string;
+}
+
+@injectable()
 class PostService{
-    execute({ content }: IPostRequestDTO) : Post{
-       const post : Post = {
-           id: '1',
-           content: content,
-           postLikes: null,
-           postLikesNumber: 0,
-           postComments: null,
-           postCommentNumber: 0,
-           created_at: new Date(),
-           deleted_at: new Date()
-       }
 
-       return post;
+    constructor(
+    @inject("PostRepository")
+    private postRepository: IPostRepository
+    ) {}
+
+    async execute({ content }: IRequest) : Promise<Post>{
+
+        const post = this.postRepository.create(content);
+
+        return post;
     }
 }
 

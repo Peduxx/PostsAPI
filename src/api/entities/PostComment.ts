@@ -1,11 +1,10 @@
 import { v4 as uuidV4 } from "uuid";
 import { Entity, PrimaryColumn, Column, CreateDateColumn, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import { PostLike } from "./PostLike";
-import { PostComment } from "./PostComment";
 import { User } from "./User";
 
-@Entity("Post")
-class Post {
+@Entity("PostComment")
+class PostComment {
 
   @PrimaryColumn()
   id?: string;
@@ -17,17 +16,11 @@ class Post {
   @Column()
   content: string;
 
-  @ManyToOne(() => Post, post => post.postLikes)
+  @ManyToOne(() => PostComment, postComment => postComment.postLikes)
   postLikes: PostLike;
 
   @Column()
   postLikesNumber: number;
-
-  @ManyToOne(() => Post, post => post.postComments)
-  postComments: PostComment;
-
-  @Column()
-  postCommentNumber: number;
 
   @CreateDateColumn()
   created_at: Date;
@@ -42,4 +35,4 @@ class Post {
   }
 }
 
-export { Post };
+export { PostComment };
