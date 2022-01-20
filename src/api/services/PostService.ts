@@ -14,11 +14,9 @@ class PostService{
     private postRepository: IPostRepository
     ) {}
 
-    async execute({ content }: IRequest) : Promise<Post>{
+    async execute({ content }: IRequest) : Promise<void>{
 
-        const post = this.postRepository.create(content);
-
-        return post;
+        this.postRepository.create(content);
     }
 }
 

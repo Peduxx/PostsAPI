@@ -1,6 +1,6 @@
 import { Post } from "api/entities/Post";
 import { getRepository, Repository } from "typeorm";
-import { IPostRepository } from "./interfaces/IPostRepository";
+import { IPostRepository } from "./IPostRepository";
 
 
 class PostRepository implements IPostRepository {
@@ -10,14 +10,12 @@ class PostRepository implements IPostRepository {
     this.repository = getRepository(Post);
   }
 
-  async create(content: string): Promise<Post> {
+  async create(content: string): Promise<void> {
     const post = this.repository.create({
         content
     });
 
     await this.repository.save(post);
-
-    return post;
   }
 }
 

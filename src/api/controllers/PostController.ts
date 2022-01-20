@@ -8,11 +8,11 @@ class PostController {
 
         const postService = container.resolve(PostService);
 
-        const post = await postService.execute({
+        await postService.execute({
             content
         });
 
-        return response.status(202).json(post);
+        return response.status(202).send();
     }
 }
 
